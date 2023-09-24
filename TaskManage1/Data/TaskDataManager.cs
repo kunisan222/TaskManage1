@@ -8,6 +8,12 @@
             _taskData.Add(data);
         }
 
+        public void EditTask(TaskData data)
+        {
+            DeleteTask(data.Name);
+            _taskData.Add(data);
+        }
+
         public void DeleteTask(string taskName)
         {
             _taskData.RemoveAll(v => v.Name == taskName);
@@ -16,6 +22,14 @@
         public int GetTaskCount()
         {
             return _taskData.Count;
+        }
+
+        public TaskData GetTaskData(string taskName)
+        {
+            var taskData = _taskData.Where(v => v.Name == taskName).FirstOrDefault();
+
+            // TODO:呼び出し元でNULLチェックが必要になる。
+            return taskData;
         }
 
         public string GetTaskName(int index)

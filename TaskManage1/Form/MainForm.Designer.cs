@@ -33,6 +33,7 @@
             groupBox1 = new GroupBox();
             TaskItemListBox = new ListBox();
             DeketeTaskButton = new Button();
+            EditTaskButton = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -88,11 +89,22 @@
             DeketeTaskButton.UseVisualStyleBackColor = true;
             DeketeTaskButton.Click += DeketeTaskButton_Click;
             // 
+            // EditTaskButton
+            // 
+            EditTaskButton.Location = new Point(20, 102);
+            EditTaskButton.Name = "EditTaskButton";
+            EditTaskButton.Size = new Size(75, 23);
+            EditTaskButton.TabIndex = 5;
+            EditTaskButton.Text = "タスク編集";
+            EditTaskButton.UseVisualStyleBackColor = true;
+            EditTaskButton.Click += EditTaskButton_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(544, 313);
+            Controls.Add(EditTaskButton);
             Controls.Add(DeketeTaskButton);
             Controls.Add(groupBox1);
             Controls.Add(CloseButton);
@@ -110,5 +122,6 @@
         private GroupBox groupBox1;
         private ListBox TaskItemListBox;
         private Button DeketeTaskButton;
+        private Button EditTaskButton;
     }
 }

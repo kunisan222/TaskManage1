@@ -5,6 +5,7 @@ namespace KT_TaskManage
     public partial class RegistTaskForm : Form
     {
         readonly TaskDataManager _data;
+        bool isEdit = false;
 
         public RegistTaskForm(TaskDataManager data)
         {
@@ -17,6 +18,32 @@ namespace KT_TaskManage
 
             TaskIdNumericUpDown.Minimum = 0;
             TaskIdNumericUpDown.Maximum = 100;
+        }
+
+        public RegistTaskForm(TaskDataManager data, string taskName) : this(data)
+        {
+            isEdit = true;
+
+            var editTaskData = _data.GetTaskData(taskName);
+
+            if (editTaskData != null)
+            {
+                TaskIdNumericUpDown.Value = Convert.ToDecimal(editTaskData.Id);
+                TaskNameTextBox.Text = editTaskData.Name;
+                DescriptionTextBox.Text = editTaskData.Description;
+                if (editTaskData.Type == TaskData.TaskType.Active)
+                {
+                    radioButton1.Checked = true;
+                    radioButton2.Checked = false;
+                }
+                else
+                {
+                    radioButton1.Checked = false;
+                    radioButton2.Checked = true;
+                }
+
+                TaskIdNumericUpDown.Enabled = false;
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -38,7 +65,14 @@ namespace KT_TaskManage
                 DescriptionTextBox.Text,
                 radioButton1.Checked ? TaskData.TaskType.Active : TaskData.TaskType.Deactive);
 
-            _data.AddTask(taskData);
+            if(!isEdit)
+            {
+                _data.AddTask(taskData);
+            }
+            else
+            {
+                _data.EditTask(taskData);
+            }
 
             MessageBox.Show("タスク登録に成功", "成功", MessageBoxButtons.OK);
         }
@@ -51,10 +85,14 @@ namespace KT_TaskManage
                 return false;
             }
 
-            var id = decimal.ToInt32(TaskIdNumericUpDown.Value);
-            if (!_data.IsDuplicateId(id, out message))
+            // TODO:条件が複雑化している。
+            if (!isEdit)
             {
-                return false;
+                var id = decimal.ToInt32(TaskIdNumericUpDown.Value);
+                if (!_data.IsDuplicateId(id, out message))
+                {
+                    return false;
+                }
             }
 
             message = string.Empty;

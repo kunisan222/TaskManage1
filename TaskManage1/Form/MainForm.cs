@@ -35,19 +35,49 @@ namespace KT_TaskManage
             }
         }
 
-        private void DeketeTaskButton_Click(object sender, EventArgs e)
+        private bool GetTaskName(out string taskName)
         {
             var taskSelIndex = TaskItemListBox.SelectedIndex;
             if (taskSelIndex == -1)
+            {
+                taskName = string.Empty;
+                return false;
+            }
+
+            var temp = TaskItemListBox.Items[taskSelIndex].ToString();
+            if (temp == null)
+            {
+                taskName = string.Empty;
+                return false;
+            }
+
+            taskName = temp;
+            return true;
+        }
+
+        private void DeketeTaskButton_Click(object sender, EventArgs e)
+        {
+            if (!GetTaskName(out var taskName))
             {
                 MessageBox.Show("削除アイテム未選択です。", "エラー", MessageBoxButtons.OK);
                 return;
             }
 
-            var taskName = TaskItemListBox.Items[taskSelIndex].ToString();
-            if (taskName != null)
+            _data.DeleteTask(taskName);
+            UpdateTaskList();
+        }
+
+        private void EditTaskButton_Click(object sender, EventArgs e)
+        {
+            if (!GetTaskName(out var taskName))
             {
-                _data.DeleteTask(taskName);
+                MessageBox.Show("編集アイテム未選択です。", "エラー", MessageBoxButtons.OK);
+                return;
+            }
+
+            using (var f = new RegistTaskForm(_data, taskName))
+            {
+                f.ShowDialog();
                 UpdateTaskList();
             }
         }
