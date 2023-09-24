@@ -31,7 +31,8 @@
             RegistTaskButton = new Button();
             CloseButton = new Button();
             groupBox1 = new GroupBox();
-            listBox1 = new ListBox();
+            TaskItemListBox = new ListBox();
+            DeketeTaskButton = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -59,7 +60,7 @@
             // groupBox1
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(listBox1);
+            groupBox1.Controls.Add(TaskItemListBox);
             groupBox1.Location = new Point(114, 24);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(418, 253);
@@ -67,21 +68,32 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "登録タスク一覧";
             // 
-            // listBox1
+            // TaskItemListBox
             // 
-            listBox1.Dock = DockStyle.Fill;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(3, 19);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(412, 231);
-            listBox1.TabIndex = 3;
+            TaskItemListBox.Dock = DockStyle.Fill;
+            TaskItemListBox.FormattingEnabled = true;
+            TaskItemListBox.ItemHeight = 15;
+            TaskItemListBox.Location = new Point(3, 19);
+            TaskItemListBox.Name = "TaskItemListBox";
+            TaskItemListBox.Size = new Size(412, 231);
+            TaskItemListBox.TabIndex = 3;
+            // 
+            // DeketeTaskButton
+            // 
+            DeketeTaskButton.Location = new Point(20, 62);
+            DeketeTaskButton.Name = "DeketeTaskButton";
+            DeketeTaskButton.Size = new Size(75, 23);
+            DeketeTaskButton.TabIndex = 4;
+            DeketeTaskButton.Text = "タスク削除";
+            DeketeTaskButton.UseVisualStyleBackColor = true;
+            DeketeTaskButton.Click += DeketeTaskButton_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(544, 313);
+            Controls.Add(DeketeTaskButton);
             Controls.Add(groupBox1);
             Controls.Add(CloseButton);
             Controls.Add(RegistTaskButton);
@@ -96,6 +108,7 @@
         private Button RegistTaskButton;
         private Button CloseButton;
         private GroupBox groupBox1;
-        private ListBox listBox1;
+        private ListBox TaskItemListBox;
+        private Button DeketeTaskButton;
     }
 }

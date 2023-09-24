@@ -8,6 +8,11 @@
             _taskData.Add(data);
         }
 
+        public void DeleteTask(string taskName)
+        {
+            _taskData.RemoveAll(v => v.Name == taskName);
+        }
+
         public int GetTaskCount()
         {
             return _taskData.Count;

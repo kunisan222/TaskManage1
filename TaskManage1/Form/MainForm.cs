@@ -28,10 +28,27 @@ namespace KT_TaskManage
 
         private void UpdateTaskList()
         {
-            listBox1.Items.Clear();
+            TaskItemListBox.Items.Clear();
             for (int i = 0; i < _data.GetTaskCount(); i++)
             {
-                listBox1.Items.Add(_data.GetTaskName(i));
+                TaskItemListBox.Items.Add(_data.GetTaskName(i));
+            }
+        }
+
+        private void DeketeTaskButton_Click(object sender, EventArgs e)
+        {
+            var taskSelIndex = TaskItemListBox.SelectedIndex;
+            if (taskSelIndex == -1)
+            {
+                MessageBox.Show("削除アイテム未選択です。", "エラー", MessageBoxButtons.OK);
+                return;
+            }
+
+            var taskName = TaskItemListBox.Items[taskSelIndex].ToString();
+            if (taskName != null)
+            {
+                _data.DeleteTask(taskName);
+                UpdateTaskList();
             }
         }
     }
