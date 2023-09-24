@@ -32,7 +32,7 @@
             CloseButton = new Button();
             groupBox1 = new GroupBox();
             TaskItemListBox = new ListBox();
-            DeketeTaskButton = new Button();
+            DeleteTaskButton = new Button();
             EditTaskButton = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -79,15 +79,15 @@
             TaskItemListBox.Size = new Size(412, 231);
             TaskItemListBox.TabIndex = 3;
             // 
-            // DeketeTaskButton
+            // DeleteTaskButton
             // 
-            DeketeTaskButton.Location = new Point(20, 62);
-            DeketeTaskButton.Name = "DeketeTaskButton";
-            DeketeTaskButton.Size = new Size(75, 23);
-            DeketeTaskButton.TabIndex = 4;
-            DeketeTaskButton.Text = "タスク削除";
-            DeketeTaskButton.UseVisualStyleBackColor = true;
-            DeketeTaskButton.Click += DeketeTaskButton_Click;
+            DeleteTaskButton.Location = new Point(20, 62);
+            DeleteTaskButton.Name = "DeleteTaskButton";
+            DeleteTaskButton.Size = new Size(75, 23);
+            DeleteTaskButton.TabIndex = 4;
+            DeleteTaskButton.Text = "タスク削除";
+            DeleteTaskButton.UseVisualStyleBackColor = true;
+            DeleteTaskButton.Click += DeleteTaskButton_Click;
             // 
             // EditTaskButton
             // 
@@ -105,7 +105,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(544, 313);
             Controls.Add(EditTaskButton);
-            Controls.Add(DeketeTaskButton);
+            Controls.Add(DeleteTaskButton);
             Controls.Add(groupBox1);
             Controls.Add(CloseButton);
             Controls.Add(RegistTaskButton);
@@ -121,7 +121,7 @@
         private Button CloseButton;
         private GroupBox groupBox1;
         private ListBox TaskItemListBox;
-        private Button DeketeTaskButton;
+        private Button DeleteTaskButton;
         private Button EditTaskButton;
     }
 }

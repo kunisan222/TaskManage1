@@ -55,7 +55,7 @@ namespace KT_TaskManage
             return true;
         }
 
-        private void DeketeTaskButton_Click(object sender, EventArgs e)
+        private void DeleteTaskButton_Click(object sender, EventArgs e)
         {
             if (!GetTaskName(out var taskName))
             {
