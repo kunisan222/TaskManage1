@@ -1,7 +1,6 @@
 using KT_TaskManage.Data;
 using KT_TaskManage.Helper;
 using KT_TaskManage.Util;
-using static KT_TaskManage.Data.TaskData;
 
 namespace KT_TaskManage
 {
@@ -35,7 +34,7 @@ namespace KT_TaskManage
         private void UpdateTaskList()
         {
             TaskItemListBox.DataSource = null;
-            TaskItemListBox.DataSource = _masterData.TaskData;
+            TaskItemListBox.DataSource = TaskDataHelper.GetActiveTaskList(_masterData);
         }
 
         private TaskID GetSelectedTaskId()
@@ -94,7 +93,7 @@ namespace KT_TaskManage
                 return;
             }
 
-            TaskItemPropertyGrid.SelectedObject = TaskDataHelper.GetTaskData(_masterData, taskId, TaskType.Active);
+            TaskItemPropertyGrid.SelectedObject = TaskDataHelper.GetTaskData(_masterData, taskId);
         }
 
         private void TaskItemListBox_Format(object sender, ListControlConvertEventArgs e)
@@ -103,6 +102,19 @@ namespace KT_TaskManage
             if (taskData == null) return;
 
             e.Value = string.Format($"{taskData.Id}, {taskData.Name}");
+        }
+
+        private void EndTaskButton_Click(object sender, EventArgs e)
+        {
+            var taskId = GetSelectedTaskId();
+            if (taskId == TaskID.Invalid)
+            {
+                MessageBox.Show("完了にするアイテム未選択です。", "エラー", MessageBoxButtons.OK);
+                return;
+            }
+
+            TaskDataHelper.EndTask(_masterData, taskId);
+            UpdateTaskList();
         }
     }
 }

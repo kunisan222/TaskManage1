@@ -38,6 +38,7 @@
             EditTaskButton = new Button();
             SaveDataButton = new Button();
             LoadDataButton = new Button();
+            EndTaskButton = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -156,11 +157,22 @@
             LoadDataButton.UseVisualStyleBackColor = true;
             LoadDataButton.Click += LoadDataButton_Click;
             // 
+            // EndTaskButton
+            // 
+            EndTaskButton.Location = new Point(20, 140);
+            EndTaskButton.Name = "EndTaskButton";
+            EndTaskButton.Size = new Size(75, 23);
+            EndTaskButton.TabIndex = 8;
+            EndTaskButton.Text = "タスク完了";
+            EndTaskButton.UseVisualStyleBackColor = true;
+            EndTaskButton.Click += EndTaskButton_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(811, 427);
+            Controls.Add(EndTaskButton);
             Controls.Add(LoadDataButton);
             Controls.Add(SaveDataButton);
             Controls.Add(EditTaskButton);
@@ -190,5 +202,6 @@
         private SplitContainer splitContainer1;
         private ListBox TaskItemListBox;
         private PropertyGrid TaskItemPropertyGrid;
+        private Button EndTaskButton;
     }
 }

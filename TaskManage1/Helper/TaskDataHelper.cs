@@ -12,8 +12,13 @@ namespace KT_TaskManage.Helper
 
         public static void EditTask(MasterData masterData, TaskData taskData)
         {
-            DeleteTask(masterData, taskData.Id);
-            AddTask(masterData, taskData);
+            masterData.TaskData
+                .Where(v => v.Id == taskData.Id)
+                .ToList()
+                .ForEach(v =>
+                {
+                    v = taskData;
+                });
         }
 
         public static void DeleteTask(MasterData masterData, TaskID taskId)
@@ -21,20 +26,39 @@ namespace KT_TaskManage.Helper
             masterData.TaskData.RemoveAll(v => v.Id == taskId);
         }
 
-        public static int GetTaskCount(MasterData masterData)
+        public static void EndTask(MasterData masterData, TaskID taskId)
         {
-            return masterData.TaskData.Count;
+            masterData.TaskData
+                .Where(v => v.Id == taskId)
+                .ToList()
+                .ForEach(v =>
+                {
+                    v.Type = TaskType.Deactive;
+                });
         }
 
-        public static TaskData GetTaskData(MasterData masterData, TaskID taskId, TaskType type)
+        public static TaskData GetTaskData(MasterData masterData, TaskID taskId)
         {
-            // TODO:ここは外から条件式を渡す形式にしたい。メソッドを分けるのは冗長。
             var taskData = masterData.TaskData
-                .Where(v => v.Id == taskId && v.Type == type)
+                .Where(v => v.Id == taskId)
                 .FirstOrDefault();
             if (taskData == null) return TaskData.InvalidData();
 
             return taskData;
+        }
+
+        public static List<TaskData> GetActiveTaskList(MasterData masterData)
+        {
+            return masterData.TaskData
+                .Where(v => v.Type == TaskType.Active)
+                .Select(n => n).ToList();
+        }
+
+        public static List<TaskData> GetDeactiveTaskList(MasterData masterData)
+        {
+            return masterData.TaskData
+                .Where(v => v.Type == TaskType.Deactive)
+                .Select(n => n).ToList();
         }
 
         public static bool IsDuplicateId(MasterData masterData, TaskID id, out string message)

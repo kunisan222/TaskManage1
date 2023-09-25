@@ -26,7 +26,7 @@ namespace KT_TaskManage
         {
             isEdit = true;
 
-            var editTaskData = TaskDataHelper.GetTaskData(masterData, taskId, TaskType.Active);
+            var editTaskData = TaskDataHelper.GetTaskData(masterData, taskId);
 
             if (editTaskData != null)
             {
