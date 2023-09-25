@@ -1,4 +1,5 @@
-﻿using KT_TaskManage.Data;
+﻿using KT_TaskManage.Controller;
+using KT_TaskManage.Data;
 using KT_TaskManage.Helper;
 using static KT_TaskManage.Data.TaskData;
 
@@ -7,13 +8,23 @@ namespace KT_TaskManage
     public partial class RegistTaskForm : Form
     {
         readonly MasterData _masterData;
+        RegistTaskController _controller
+            ;
         bool isEdit = false;
+
+        public interface IController
+        {
+            bool IsActive();
+            int MinTaskId();
+            int MaxTaskId();
+        }
 
         public RegistTaskForm(MasterData data)
         {
             InitializeComponent();
 
             _masterData = data;
+            _controller = new RegistTaskController(_masterData, this);
 
             radioButton1.Checked = true;
             radioButton2.Checked = false;
@@ -44,8 +55,10 @@ namespace KT_TaskManage
                     radioButton2.Checked = true;
                 }
 
-                TaskIdNumericUpDown.Enabled = false;
             }
+
+            radioButton1.Checked = false;
+            TaskIdNumericUpDown.Enabled = false;
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

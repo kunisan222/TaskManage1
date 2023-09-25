@@ -1,3 +1,4 @@
+using KT_TaskManage.Controller;
 using KT_TaskManage.Data;
 using KT_TaskManage.Helper;
 using KT_TaskManage.Util;
@@ -7,10 +8,18 @@ namespace KT_TaskManage
     public partial class MainForm : Form
     {
         MasterData _masterData = new();
+        MainController _controller;
+
+        public interface IController
+        {
+
+        }
 
         public MainForm()
         {
             InitializeComponent();
+
+            _controller = new MainController(_masterData, this);
 
             ActiveTaskItemListBox.DisplayMember = "Name";
             DeactiveTaskItemListBox.DisplayMember = "Name";
