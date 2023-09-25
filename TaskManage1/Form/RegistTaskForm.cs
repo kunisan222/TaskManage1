@@ -21,15 +21,15 @@ namespace KT_TaskManage
             TaskIdNumericUpDown.Maximum = 100;
         }
 
-        public RegistTaskForm(MasterData masterData, string taskName) : this(masterData)
+        public RegistTaskForm(MasterData masterData, TaskID taskId) : this(masterData)
         {
             isEdit = true;
 
-            var editTaskData = TaskDataHelper.GetTaskData(masterData, taskName);
+            var editTaskData = TaskDataHelper.GetTaskData(masterData, taskId);
 
             if (editTaskData != null)
             {
-                TaskIdNumericUpDown.Value = Convert.ToDecimal(editTaskData.Id);
+                TaskIdNumericUpDown.Value = editTaskData.Id.ToDecimal();
                 TaskNameTextBox.Text = editTaskData.Name;
                 DescriptionTextBox.Text = editTaskData.Description;
                 if (editTaskData.Type == TaskData.TaskType.Active)
@@ -61,7 +61,7 @@ namespace KT_TaskManage
             }
 
             var taskData = new TaskData(
-                decimal.ToInt32(TaskIdNumericUpDown.Value),
+                new TaskID(decimal.ToInt32(TaskIdNumericUpDown.Value)),
                 TaskNameTextBox.Text,
                 DescriptionTextBox.Text,
                 radioButton1.Checked ? TaskData.TaskType.Active : TaskData.TaskType.Deactive);
@@ -76,6 +76,7 @@ namespace KT_TaskManage
             }
 
             MessageBox.Show("タスク登録に成功", "成功", MessageBoxButtons.OK);
+            this.Close();
         }
 
         private bool CheckValid(out string message)
@@ -89,8 +90,8 @@ namespace KT_TaskManage
             // TODO:条件が複雑化している。
             if (!isEdit)
             {
-                var id = decimal.ToInt32(TaskIdNumericUpDown.Value);
-                if (!TaskDataHelper.IsDuplicateId(_masterData, id, out message))
+                var taskId = new TaskID(decimal.ToInt32(TaskIdNumericUpDown.Value));
+                if (!TaskDataHelper.IsDuplicateId(_masterData, taskId, out message))
                 {
                     return false;
                 }

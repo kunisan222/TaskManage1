@@ -11,13 +11,13 @@ namespace KT_TaskManage.Helper
 
         public static void EditTask(MasterData masterData, TaskData taskData)
         {
-            DeleteTask(masterData, taskData.Name);
+            DeleteTask(masterData, taskData.Id);
             AddTask(masterData, taskData);
         }
 
-        public static void DeleteTask(MasterData masterData, string taskName)
+        public static void DeleteTask(MasterData masterData, TaskID taskId)
         {
-            masterData.TaskData.RemoveAll(v => v.Name == taskName);
+            masterData.TaskData.RemoveAll(v => v.Id == taskId);
         }
 
         public static int GetTaskCount(MasterData masterData)
@@ -25,9 +25,9 @@ namespace KT_TaskManage.Helper
             return masterData.TaskData.Count;
         }
 
-        public static TaskData GetTaskData(MasterData masterData, string taskName)
+        public static TaskData GetTaskData(MasterData masterData, TaskID taskId)
         {
-            var taskData = masterData.TaskData.Where(v => v.Name == taskName).FirstOrDefault();
+            var taskData = masterData.TaskData.Where(v => v.Id == taskId).FirstOrDefault();
             if (taskData == null) return TaskData.InvalidData();
 
             return taskData;
@@ -38,7 +38,7 @@ namespace KT_TaskManage.Helper
             return masterData.TaskData[index].Name;
         }
 
-        public static bool IsDuplicateId(MasterData masterData, int id, out string message)
+        public static bool IsDuplicateId(MasterData masterData, TaskID id, out string message)
         {
             if (masterData.TaskData.Any(n => n.Id == id))
             {

@@ -11,6 +11,9 @@ namespace KT_TaskManage
         public MainForm()
         {
             InitializeComponent();
+
+            TaskItemListBox.DisplayMember = "Name";
+
             UpdateTaskList();
         }
 
@@ -30,54 +33,41 @@ namespace KT_TaskManage
 
         private void UpdateTaskList()
         {
-            TaskItemListBox.Items.Clear();
-            for (int i = 0; i < TaskDataHelper.GetTaskCount(_masterData); i++)
-            {
-                TaskItemListBox.Items.Add(TaskDataHelper.GetTaskName(_masterData, i));
-            }
+            TaskItemListBox.DataSource = null;
+            TaskItemListBox.DataSource = _masterData.TaskData;
         }
 
-        private bool GetTaskName(out string taskName)
+        private TaskID GetSelectedTaskId()
         {
-            var taskSelIndex = TaskItemListBox.SelectedIndex;
-            if (taskSelIndex == -1)
-            {
-                taskName = string.Empty;
-                return false;
-            }
+            var taskData = TaskItemListBox.SelectedItem as TaskData;
+            if (taskData == null) return TaskID.Invalid;
 
-            var temp = TaskItemListBox.Items[taskSelIndex].ToString();
-            if (temp == null)
-            {
-                taskName = string.Empty;
-                return false;
-            }
-
-            taskName = temp;
-            return true;
+            return taskData.Id;
         }
 
         private void DeleteTaskButton_Click(object sender, EventArgs e)
         {
-            if (!GetTaskName(out var taskName))
+            var taskId = GetSelectedTaskId();
+            if (taskId == TaskID.Invalid)
             {
                 MessageBox.Show("削除アイテム未選択です。", "エラー", MessageBoxButtons.OK);
                 return;
             }
 
-            TaskDataHelper.DeleteTask(_masterData, taskName);
+            TaskDataHelper.DeleteTask(_masterData, taskId);
             UpdateTaskList();
         }
 
         private void EditTaskButton_Click(object sender, EventArgs e)
         {
-            if (!GetTaskName(out var taskName))
+            var taskId = GetSelectedTaskId();
+            if (taskId == TaskID.Invalid)
             {
-                MessageBox.Show("編集アイテム未選択です。", "エラー", MessageBoxButtons.OK);
+                MessageBox.Show("削除アイテム未選択です。", "エラー", MessageBoxButtons.OK);
                 return;
             }
 
-            using (var f = new RegistTaskForm(_masterData, taskName))
+            using (var f = new RegistTaskForm(_masterData, taskId))
             {
                 f.ShowDialog();
                 UpdateTaskList();
@@ -93,6 +83,25 @@ namespace KT_TaskManage
         {
             FileManager.XmlDeSerialize(@".\test.xml", out _masterData);
             UpdateTaskList();
+        }
+
+        private void TaskItemListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var taskId = GetSelectedTaskId();
+            if (taskId == TaskID.Invalid)
+            {
+                return;
+            }
+
+            TaskItemPropertyGrid.SelectedObject = TaskDataHelper.GetTaskData(_masterData, taskId);
+        }
+
+        private void TaskItemListBox_Format(object sender, ListControlConvertEventArgs e)
+        {
+            var taskData = e.ListItem as TaskData;
+            if (taskData == null) return;
+
+            e.Value = string.Format($"{taskData.Id}, {taskData.Name}");
         }
     }
 }

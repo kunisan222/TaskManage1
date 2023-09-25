@@ -37,7 +37,7 @@
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
             TaskIdNumericUpDown = new NumericUpDown();
-            CancelButton = new Button();
+            CloseButton = new Button();
             RegistButton = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TaskIdNumericUpDown).BeginInit();
@@ -131,14 +131,14 @@
             // 
             // CancelButton
             // 
-            CancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            CancelButton.Location = new Point(346, 219);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(75, 23);
-            CancelButton.TabIndex = 8;
-            CancelButton.Text = "Close";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
+            CloseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            CloseButton.Location = new Point(346, 219);
+            CloseButton.Name = "CancelButton";
+            CloseButton.Size = new Size(75, 23);
+            CloseButton.TabIndex = 8;
+            CloseButton.Text = "Close";
+            CloseButton.UseVisualStyleBackColor = true;
+            CloseButton.Click += CancelButton_Click;
             // 
             // RegistButton
             // 
@@ -157,7 +157,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(433, 251);
             Controls.Add(RegistButton);
-            Controls.Add(CancelButton);
+            Controls.Add(CloseButton);
             Controls.Add(TaskIdNumericUpDown);
             Controls.Add(groupBox1);
             Controls.Add(label3);
@@ -184,7 +184,7 @@
         private NumericUpDown TaskIdNumericUpDown;
         private RadioButton radioButton2;
         private RadioButton radioButton1;
-        private Button CancelButton;
+        private Button CloseButton;
         private Button RegistButton;
     }
 }
