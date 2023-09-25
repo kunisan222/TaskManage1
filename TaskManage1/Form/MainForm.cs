@@ -12,7 +12,8 @@ namespace KT_TaskManage
         {
             InitializeComponent();
 
-            TaskItemListBox.DisplayMember = "Name";
+            ActiveTaskItemListBox.DisplayMember = "Name";
+            DeactiveTaskItemListBox.DisplayMember = "Name";
 
             UpdateTaskList();
         }
@@ -33,13 +34,20 @@ namespace KT_TaskManage
 
         private void UpdateTaskList()
         {
-            TaskItemListBox.DataSource = null;
-            TaskItemListBox.DataSource = TaskDataHelper.GetActiveTaskList(_masterData);
+            ActiveTaskItemListBox.DataSource = null;
+            ActiveTaskItemListBox.DataSource = TaskDataHelper.GetActiveTaskList(_masterData);
+
+            DeactiveTaskItemListBox.DataSource = null;
+            DeactiveTaskItemListBox.DataSource = TaskDataHelper.GetDeactiveTaskList(_masterData);
         }
+
+        // TODO:Indexで判定するのは良くないような。マジックナンバーだし。
+        private ListBox GetActiveListBox()
+            => TaskListTabControl.SelectedIndex == 0 ? ActiveTaskItemListBox : DeactiveTaskItemListBox;
 
         private TaskID GetSelectedTaskId()
         {
-            var taskData = TaskItemListBox.SelectedItem as TaskData;
+            var taskData = GetActiveListBox().SelectedItem as TaskData;
             if (taskData == null) return TaskID.Invalid;
 
             return taskData.Id;

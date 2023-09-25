@@ -32,7 +32,11 @@
             CloseButton = new Button();
             groupBox1 = new GroupBox();
             splitContainer1 = new SplitContainer();
-            TaskItemListBox = new ListBox();
+            TaskListTabControl = new TabControl();
+            tabPage1 = new TabPage();
+            ActiveTaskItemListBox = new ListBox();
+            tabPage2 = new TabPage();
+            DeactiveTaskItemListBox = new ListBox();
             TaskItemPropertyGrid = new PropertyGrid();
             DeleteTaskButton = new Button();
             EditTaskButton = new Button();
@@ -44,6 +48,9 @@
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
+            TaskListTabControl.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
             SuspendLayout();
             // 
             // RegistTaskButton
@@ -76,7 +83,7 @@
             groupBox1.Size = new Size(685, 367);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
-            groupBox1.Text = "登録タスク一覧";
+            groupBox1.Text = "タスク一覧";
             // 
             // splitContainer1
             // 
@@ -86,7 +93,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(TaskItemListBox);
+            splitContainer1.Panel1.Controls.Add(TaskListTabControl);
             splitContainer1.Panel1.Padding = new Padding(10);
             // 
             // splitContainer1.Panel2
@@ -97,17 +104,62 @@
             splitContainer1.SplitterDistance = 314;
             splitContainer1.TabIndex = 4;
             // 
-            // TaskItemListBox
+            // TaskListTabControl
             // 
-            TaskItemListBox.Dock = DockStyle.Fill;
-            TaskItemListBox.FormattingEnabled = true;
-            TaskItemListBox.ItemHeight = 15;
-            TaskItemListBox.Location = new Point(10, 10);
-            TaskItemListBox.Name = "TaskItemListBox";
-            TaskItemListBox.Size = new Size(294, 325);
-            TaskItemListBox.TabIndex = 4;
-            TaskItemListBox.SelectedIndexChanged += TaskItemListBox_SelectedIndexChanged;
-            TaskItemListBox.Format += TaskItemListBox_Format;
+            TaskListTabControl.Controls.Add(tabPage1);
+            TaskListTabControl.Controls.Add(tabPage2);
+            TaskListTabControl.Dock = DockStyle.Fill;
+            TaskListTabControl.Location = new Point(10, 10);
+            TaskListTabControl.Name = "TaskListTabControl";
+            TaskListTabControl.SelectedIndex = 0;
+            TaskListTabControl.Size = new Size(294, 325);
+            TaskListTabControl.TabIndex = 5;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(ActiveTaskItemListBox);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(286, 297);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "残タスク一覧";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ActiveTaskItemListBox
+            // 
+            ActiveTaskItemListBox.Dock = DockStyle.Fill;
+            ActiveTaskItemListBox.FormattingEnabled = true;
+            ActiveTaskItemListBox.ItemHeight = 15;
+            ActiveTaskItemListBox.Location = new Point(3, 3);
+            ActiveTaskItemListBox.Name = "ActiveTaskItemListBox";
+            ActiveTaskItemListBox.Size = new Size(280, 291);
+            ActiveTaskItemListBox.TabIndex = 4;
+            ActiveTaskItemListBox.SelectedIndexChanged += TaskItemListBox_SelectedIndexChanged;
+            ActiveTaskItemListBox.Format += TaskItemListBox_Format;
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(DeactiveTaskItemListBox);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(286, 297);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "完了タスク一覧";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // DeactiveTaskItemListBox
+            // 
+            DeactiveTaskItemListBox.Dock = DockStyle.Fill;
+            DeactiveTaskItemListBox.FormattingEnabled = true;
+            DeactiveTaskItemListBox.ItemHeight = 15;
+            DeactiveTaskItemListBox.Location = new Point(3, 3);
+            DeactiveTaskItemListBox.Name = "DeactiveTaskItemListBox";
+            DeactiveTaskItemListBox.Size = new Size(280, 291);
+            DeactiveTaskItemListBox.TabIndex = 5;
+            DeactiveTaskItemListBox.SelectedIndexChanged += TaskItemListBox_SelectedIndexChanged;
+            DeactiveTaskItemListBox.Format += TaskItemListBox_Format;
             // 
             // TaskItemPropertyGrid
             // 
@@ -187,6 +239,9 @@
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
+            TaskListTabControl.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -200,8 +255,12 @@
         private Button SaveDataButton;
         private Button LoadDataButton;
         private SplitContainer splitContainer1;
-        private ListBox TaskItemListBox;
+        private ListBox ActiveTaskItemListBox;
         private PropertyGrid TaskItemPropertyGrid;
         private Button EndTaskButton;
+        private TabControl TaskListTabControl;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private ListBox DeactiveTaskItemListBox;
     }
 }
