@@ -62,9 +62,8 @@ namespace KT_TaskManage
         private void DeleteTaskButton_Click(object sender, EventArgs e)
         {
             var taskData = GetActiveListBox().SelectedItem as TaskData;
-            if (taskData == null) return;
-
-            if (!_controller.IsValidTaskId(taskData.Id))
+            if (taskData == null ||
+                !_controller.IsValidTaskId(taskData.Id))
             {
                 MessageBox.Show(Resource.NoSelectedDeleteTaskId, Resource.Error, MessageBoxButtons.OK);
                 return;
@@ -78,9 +77,8 @@ namespace KT_TaskManage
         private void EditTaskButton_Click(object sender, EventArgs e)
         {
             var taskData = GetActiveListBox().SelectedItem as TaskData;
-            if (taskData == null) return;
-
-            if (!_controller.IsValidTaskId(taskData.Id))
+            if (taskData == null ||
+                !_controller.IsValidTaskId(taskData.Id))
             {
                 MessageBox.Show(Resource.NoSelectedEditTaskId, Resource.Error, MessageBoxButtons.OK);
                 return;
@@ -107,9 +105,8 @@ namespace KT_TaskManage
         private void TaskItemListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var taskData = GetActiveListBox().SelectedItem as TaskData;
-            if (taskData == null) return;
-
-            if (!_controller.IsValidTaskId(taskData.Id)) return;
+            if (taskData == null ||
+                !_controller.IsValidTaskId(taskData.Id)) return;
 
             TaskItemPropertyGrid.SelectedObject = _controller.GetTaskData(taskData.Id);
         }
@@ -125,11 +122,9 @@ namespace KT_TaskManage
         private void EndTaskButton_Click(object sender, EventArgs e)
         {
             var taskData = GetActiveListBox().SelectedItem as TaskData;
-            if (taskData == null) return;
-
-            if (!_controller.IsValidTaskId(taskData.Id))
+            if (taskData == null ||
+                !_controller.IsValidTaskId(taskData.Id))
             {
-                MessageBox.Show(Resource.NoSelectedDeleteTaskId, Resource.Error, MessageBoxButtons.OK);
                 return;
             }
 
