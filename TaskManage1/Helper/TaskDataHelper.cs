@@ -1,4 +1,5 @@
 ﻿using KT_TaskManage.Data;
+using static KT_TaskManage.Data.TaskData;
 
 namespace KT_TaskManage.Helper
 {
@@ -25,17 +26,15 @@ namespace KT_TaskManage.Helper
             return masterData.TaskData.Count;
         }
 
-        public static TaskData GetTaskData(MasterData masterData, TaskID taskId)
+        public static TaskData GetTaskData(MasterData masterData, TaskID taskId, TaskType type)
         {
-            var taskData = masterData.TaskData.Where(v => v.Id == taskId).FirstOrDefault();
+            // TODO:ここは外から条件式を渡す形式にしたい。メソッドを分けるのは冗長。
+            var taskData = masterData.TaskData
+                .Where(v => v.Id == taskId && v.Type == type)
+                .FirstOrDefault();
             if (taskData == null) return TaskData.InvalidData();
 
             return taskData;
-        }
-
-        public static string GetTaskName(MasterData masterData, int index)
-        {
-            return masterData.TaskData[index].Name;
         }
 
         public static bool IsDuplicateId(MasterData masterData, TaskID id, out string message)

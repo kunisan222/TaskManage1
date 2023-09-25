@@ -1,6 +1,7 @@
 using KT_TaskManage.Data;
 using KT_TaskManage.Helper;
 using KT_TaskManage.Util;
+using static KT_TaskManage.Data.TaskData;
 
 namespace KT_TaskManage
 {
@@ -93,7 +94,7 @@ namespace KT_TaskManage
                 return;
             }
 
-            TaskItemPropertyGrid.SelectedObject = TaskDataHelper.GetTaskData(_masterData, taskId);
+            TaskItemPropertyGrid.SelectedObject = TaskDataHelper.GetTaskData(_masterData, taskId, TaskType.Active);
         }
 
         private void TaskItemListBox_Format(object sender, ListControlConvertEventArgs e)

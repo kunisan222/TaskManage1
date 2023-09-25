@@ -1,4 +1,6 @@
-﻿namespace KT_TaskManage.Data
+﻿using System.ComponentModel;
+
+namespace KT_TaskManage.Data
 {
     public class TaskData
     {
@@ -12,6 +14,7 @@
         public TaskID Id { get; set; } = TaskID.Invalid;
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        [ReadOnly(true)]
         public TaskType Type { get; set; } = TaskType.None;
         public static TaskData InvalidData()
         {

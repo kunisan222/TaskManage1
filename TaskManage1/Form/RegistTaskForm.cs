@@ -1,5 +1,6 @@
 ﻿using KT_TaskManage.Data;
 using KT_TaskManage.Helper;
+using static KT_TaskManage.Data.TaskData;
 
 namespace KT_TaskManage
 {
@@ -25,14 +26,14 @@ namespace KT_TaskManage
         {
             isEdit = true;
 
-            var editTaskData = TaskDataHelper.GetTaskData(masterData, taskId);
+            var editTaskData = TaskDataHelper.GetTaskData(masterData, taskId, TaskType.Active);
 
             if (editTaskData != null)
             {
                 TaskIdNumericUpDown.Value = editTaskData.Id.ToDecimal();
                 TaskNameTextBox.Text = editTaskData.Name;
                 DescriptionTextBox.Text = editTaskData.Description;
-                if (editTaskData.Type == TaskData.TaskType.Active)
+                if (editTaskData.Type == TaskType.Active)
                 {
                     radioButton1.Checked = true;
                     radioButton2.Checked = false;
@@ -64,7 +65,7 @@ namespace KT_TaskManage
                 new TaskID(decimal.ToInt32(TaskIdNumericUpDown.Value)),
                 TaskNameTextBox.Text,
                 DescriptionTextBox.Text,
-                radioButton1.Checked ? TaskData.TaskType.Active : TaskData.TaskType.Deactive);
+                radioButton1.Checked ? TaskType.Active : TaskType.Deactive);
 
             if (!isEdit)
             {
