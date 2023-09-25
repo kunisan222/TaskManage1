@@ -1,17 +1,18 @@
 ﻿using KT_TaskManage.Data;
+using KT_TaskManage.Helper;
 
 namespace KT_TaskManage
 {
     public partial class RegistTaskForm : Form
     {
-        readonly TaskDataManager _data;
+        readonly MasterData _masterData;
         bool isEdit = false;
 
-        public RegistTaskForm(TaskDataManager data)
+        public RegistTaskForm(MasterData data)
         {
             InitializeComponent();
 
-            _data = data;
+            _masterData = data;
 
             radioButton1.Checked = true;
             radioButton2.Checked = false;
@@ -20,11 +21,11 @@ namespace KT_TaskManage
             TaskIdNumericUpDown.Maximum = 100;
         }
 
-        public RegistTaskForm(TaskDataManager data, string taskName) : this(data)
+        public RegistTaskForm(MasterData masterData, string taskName) : this(masterData)
         {
             isEdit = true;
 
-            var editTaskData = _data.GetTaskData(taskName);
+            var editTaskData = TaskDataHelper.GetTaskData(masterData, taskName);
 
             if (editTaskData != null)
             {
@@ -65,13 +66,13 @@ namespace KT_TaskManage
                 DescriptionTextBox.Text,
                 radioButton1.Checked ? TaskData.TaskType.Active : TaskData.TaskType.Deactive);
 
-            if(!isEdit)
+            if (!isEdit)
             {
-                _data.AddTask(taskData);
+                TaskDataHelper.AddTask(_masterData, taskData);
             }
             else
             {
-                _data.EditTask(taskData);
+                TaskDataHelper.EditTask(_masterData, taskData);
             }
 
             MessageBox.Show("タスク登録に成功", "成功", MessageBoxButtons.OK);
@@ -89,7 +90,7 @@ namespace KT_TaskManage
             if (!isEdit)
             {
                 var id = decimal.ToInt32(TaskIdNumericUpDown.Value);
-                if (!_data.IsDuplicateId(id, out message))
+                if (!TaskDataHelper.IsDuplicateId(_masterData, id, out message))
                 {
                     return false;
                 }

@@ -34,6 +34,8 @@
             TaskItemListBox = new ListBox();
             DeleteTaskButton = new Button();
             EditTaskButton = new Button();
+            SaveDataButton = new Button();
+            LoadDataButton = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -99,11 +101,33 @@
             EditTaskButton.UseVisualStyleBackColor = true;
             EditTaskButton.Click += EditTaskButton_Click;
             // 
+            // SaveDataButton
+            // 
+            SaveDataButton.Location = new Point(20, 219);
+            SaveDataButton.Name = "SaveDataButton";
+            SaveDataButton.Size = new Size(75, 23);
+            SaveDataButton.TabIndex = 6;
+            SaveDataButton.Text = "データ保存";
+            SaveDataButton.UseVisualStyleBackColor = true;
+            SaveDataButton.Click += SaveDataButton_Click;
+            // 
+            // LoadDataButton
+            // 
+            LoadDataButton.Location = new Point(20, 254);
+            LoadDataButton.Name = "LoadDataButton";
+            LoadDataButton.Size = new Size(75, 23);
+            LoadDataButton.TabIndex = 7;
+            LoadDataButton.Text = "データ読出";
+            LoadDataButton.UseVisualStyleBackColor = true;
+            LoadDataButton.Click += LoadDataButton_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(544, 313);
+            Controls.Add(LoadDataButton);
+            Controls.Add(SaveDataButton);
             Controls.Add(EditTaskButton);
             Controls.Add(DeleteTaskButton);
             Controls.Add(groupBox1);
@@ -123,5 +147,7 @@
         private ListBox TaskItemListBox;
         private Button DeleteTaskButton;
         private Button EditTaskButton;
+        private Button SaveDataButton;
+        private Button LoadDataButton;
     }
 }

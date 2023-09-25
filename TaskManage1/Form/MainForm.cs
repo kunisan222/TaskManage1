@@ -1,10 +1,12 @@
 using KT_TaskManage.Data;
+using KT_TaskManage.Helper;
+using KT_TaskManage.Util;
 
 namespace KT_TaskManage
 {
     public partial class MainForm : Form
     {
-        readonly TaskDataManager _data = new();
+        MasterData _masterData = new();
 
         public MainForm()
         {
@@ -14,7 +16,7 @@ namespace KT_TaskManage
 
         private void RegistTaskButton_Click(object sender, EventArgs e)
         {
-            using (var f = new RegistTaskForm(_data))
+            using (var f = new RegistTaskForm(_masterData))
             {
                 f.ShowDialog();
                 UpdateTaskList();
@@ -29,9 +31,9 @@ namespace KT_TaskManage
         private void UpdateTaskList()
         {
             TaskItemListBox.Items.Clear();
-            for (int i = 0; i < _data.GetTaskCount(); i++)
+            for (int i = 0; i < TaskDataHelper.GetTaskCount(_masterData); i++)
             {
-                TaskItemListBox.Items.Add(_data.GetTaskName(i));
+                TaskItemListBox.Items.Add(TaskDataHelper.GetTaskName(_masterData, i));
             }
         }
 
@@ -63,7 +65,7 @@ namespace KT_TaskManage
                 return;
             }
 
-            _data.DeleteTask(taskName);
+            TaskDataHelper.DeleteTask(_masterData, taskName);
             UpdateTaskList();
         }
 
@@ -75,11 +77,22 @@ namespace KT_TaskManage
                 return;
             }
 
-            using (var f = new RegistTaskForm(_data, taskName))
+            using (var f = new RegistTaskForm(_masterData, taskName))
             {
                 f.ShowDialog();
                 UpdateTaskList();
             }
+        }
+
+        private void SaveDataButton_Click(object sender, EventArgs e)
+        {
+            FileManager.XmlSerialize(@".\test.xml", _masterData);
+        }
+
+        private void LoadDataButton_Click(object sender, EventArgs e)
+        {
+            FileManager.XmlDeSerialize(@".\test.xml", out _masterData);
+            UpdateTaskList();
         }
     }
 }
