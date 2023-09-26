@@ -70,6 +70,15 @@ namespace KT_TaskManage {
         }
         
         /// <summary>
+        ///   タスク管理アプリ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageBoxTitle {
+            get {
+                return ResourceManager.GetString("MessageBoxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   追加するタスクが選択されいてません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NoSelectedAddTaskId {
@@ -93,6 +102,33 @@ namespace KT_TaskManage {
         internal static string NoSelectedEditTaskId {
             get {
                 return ResourceManager.GetString("NoSelectedEditTaskId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タスクデータの登録に成功しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string RegistTaskDataSuccessed {
+            get {
+                return ResourceManager.GetString("RegistTaskDataSuccessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タスクIDが重複しています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TaskIdDuplicated {
+            get {
+                return ResourceManager.GetString("TaskIdDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タスク名が設定されていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TaskNameEmptied {
+            get {
+                return ResourceManager.GetString("TaskNameEmptied", resourceCulture);
             }
         }
     }

@@ -1,64 +1,44 @@
-﻿using KT_TaskManage.Controller;
-using KT_TaskManage.Data;
-using KT_TaskManage.Helper;
+﻿using KT_TaskManage.Data;
 using static KT_TaskManage.Data.TaskData;
 
 namespace KT_TaskManage
 {
     public partial class RegistTaskForm : Form
     {
-        readonly MasterData _masterData;
-        RegistTaskController _controller
-            ;
-        bool isEdit = false;
+        IController _controller;
 
         public interface IController
         {
-            bool IsActive();
+            bool IsActiveTask(TaskID taskId);
             int MinTaskId();
             int MaxTaskId();
+            void SetEdit(bool enable);
+            bool CanChangeTaskId(TaskID taskId);
+            string GetTaskName(TaskID taskId);
+            string GetDescription(TaskID taskId);
+            bool RegistTaskData(TaskData taskData, out string resultMessage);
         }
 
-        public RegistTaskForm(MasterData data)
+        public RegistTaskForm(IController controller)
         {
             InitializeComponent();
 
-            _masterData = data;
-            _controller = new RegistTaskController(_masterData, this);
+            _controller = controller;
 
-            radioButton1.Checked = true;
-            radioButton2.Checked = false;
-
-            TaskIdNumericUpDown.Minimum = 0;
-            TaskIdNumericUpDown.Maximum = 100;
+            TaskIdNumericUpDown.Minimum = _controller.MinTaskId();
+            TaskIdNumericUpDown.Maximum = _controller.MaxTaskId();
         }
 
-        public RegistTaskForm(MasterData masterData, TaskID taskId) : this(masterData)
+        public RegistTaskForm(IController controller, TaskID taskId) : this(controller)
         {
-            isEdit = true;
+            _controller.SetEdit(true);
 
-            var editTaskData = TaskDataHelper.GetTaskData(masterData, taskId);
-
-            if (editTaskData != null)
-            {
-                TaskIdNumericUpDown.Value = editTaskData.Id.ToDecimal();
-                TaskNameTextBox.Text = editTaskData.Name;
-                DescriptionTextBox.Text = editTaskData.Description;
-                if (editTaskData.Type == TaskType.Active)
-                {
-                    radioButton1.Checked = true;
-                    radioButton2.Checked = false;
-                }
-                else
-                {
-                    radioButton1.Checked = false;
-                    radioButton2.Checked = true;
-                }
-
-            }
-
-            radioButton1.Checked = false;
-            TaskIdNumericUpDown.Enabled = false;
+            TaskIdNumericUpDown.Value = taskId.ToDecimal();
+            TaskNameTextBox.Text = _controller.GetTaskName(taskId);
+            DescriptionTextBox.Text = _controller.GetDescription(taskId);
+            radioButton1.Checked = _controller.IsActiveTask(taskId);
+            radioButton2.Checked = !_controller.IsActiveTask(taskId);
+            TaskIdNumericUpDown.Enabled = _controller.CanChangeTaskId(taskId);
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -68,51 +48,20 @@ namespace KT_TaskManage
 
         private void RegistButton_Click(object sender, EventArgs e)
         {
-            if (!CheckValid(out var message))
-            {
-                MessageBox.Show(message, "エラー", MessageBoxButtons.OK);
-                return;
-            }
-
             var taskData = new TaskData(
                 new TaskID(decimal.ToInt32(TaskIdNumericUpDown.Value)),
                 TaskNameTextBox.Text,
                 DescriptionTextBox.Text,
                 radioButton1.Checked ? TaskType.Active : TaskType.Deactive);
 
-            if (!isEdit)
+            if (!_controller.RegistTaskData(taskData, out var resultMessage))
             {
-                TaskDataHelper.AddTask(_masterData, taskData);
-            }
-            else
-            {
-                TaskDataHelper.EditTask(_masterData, taskData);
+                MessageBox.Show(resultMessage, Resource.MessageBoxTitle, MessageBoxButtons.OK);
+                return;
             }
 
-            MessageBox.Show("タスク登録に成功", "成功", MessageBoxButtons.OK);
+            MessageBox.Show(resultMessage, Resource.MessageBoxTitle, MessageBoxButtons.OK);
             this.Close();
-        }
-
-        private bool CheckValid(out string message)
-        {
-            if (string.IsNullOrEmpty(TaskNameTextBox.Text))
-            {
-                message = "名前が入力されていません。";
-                return false;
-            }
-
-            // TODO:条件が複雑化している。
-            if (!isEdit)
-            {
-                var taskId = new TaskID(decimal.ToInt32(TaskIdNumericUpDown.Value));
-                if (!TaskDataHelper.IsDuplicateId(_masterData, taskId, out message))
-                {
-                    return false;
-                }
-            }
-
-            message = string.Empty;
-            return true;
         }
     }
 }

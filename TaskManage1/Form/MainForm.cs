@@ -1,15 +1,13 @@
 using KT_TaskManage.Controller;
 using KT_TaskManage.Data;
-using KT_TaskManage.Util;
 
 namespace KT_TaskManage
 {
     public partial class MainForm : Form
     {
-        MasterData _masterData = new();
         IController _controller;
 
-        internal interface IController
+        public interface IController
         {
             internal List<TaskData> GetActiveTaskList();
             internal List<TaskData> GetDeactiveTaskList();
@@ -18,13 +16,17 @@ namespace KT_TaskManage
             void EditTask(TaskData taskData);
             void DeleteTask(TaskID taskId);
             TaskData GetTaskData(TaskID taskId);
+            void SaveData();
+            void LoadData();
+            bool OpenNewRegistTaskForm(Func<MasterData, bool> func);
+            bool OpenEditRegistTaskForm(Func<MasterData, TaskID, bool> func, TaskID taskId);
         }
 
-        public MainForm()
+        public MainForm(IController controller)
         {
             InitializeComponent();
 
-            _controller = new MainController(_masterData, this);
+            _controller = controller;
 
             ActiveTaskItemListBox.DisplayMember = "Name";
             DeactiveTaskItemListBox.DisplayMember = "Name";
@@ -34,11 +36,17 @@ namespace KT_TaskManage
 
         private void RegistTaskButton_Click(object sender, EventArgs e)
         {
-            using (var f = new RegistTaskForm(_masterData))
+            _controller.OpenNewRegistTaskForm(masterData =>
             {
-                f.ShowDialog();
-                UpdateTaskList();
-            }
+                using (var c = new RegistTaskController(masterData))
+                using (var f = new RegistTaskForm(c))
+                {
+                    f.ShowDialog();
+                    UpdateTaskList();
+                }
+
+                return true;
+            });
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -84,21 +92,27 @@ namespace KT_TaskManage
                 return;
             }
 
-            using (var f = new RegistTaskForm(_masterData, taskData.Id))
+            _controller.OpenEditRegistTaskForm((masterData, taskId) =>
             {
-                f.ShowDialog();
-                UpdateTaskList();
-            }
+                using (var c = new RegistTaskController(masterData))
+                using (var f = new RegistTaskForm(c, taskId))
+                {
+                    f.ShowDialog();
+                    UpdateTaskList();
+                }
+
+                return true;
+            }, taskData.Id);
         }
 
         private void SaveDataButton_Click(object sender, EventArgs e)
         {
-            FileManager.XmlSerialize(@".\test.xml", _masterData);
+            _controller.SaveData();
         }
 
         private void LoadDataButton_Click(object sender, EventArgs e)
         {
-            FileManager.XmlDeSerialize(@".\test.xml", out _masterData);
+            _controller.LoadData();
             UpdateTaskList();
         }
 

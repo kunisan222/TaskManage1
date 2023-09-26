@@ -120,6 +120,9 @@
   <data name="Error" xml:space="preserve">
     <value>エラー</value>
   </data>
+  <data name="MessageBoxTitle" xml:space="preserve">
+    <value>タスク管理アプリ</value>
+  </data>
   <data name="NoSelectedAddTaskId" xml:space="preserve">
     <value>追加するタスクが選択されいてません。</value>
   </data>
@@ -128,5 +131,14 @@
   </data>
   <data name="NoSelectedEditTaskId" xml:space="preserve">
     <value>編集するタスクが選択されいてません。</value>
+  </data>
+  <data name="RegistTaskDataSuccessed" xml:space="preserve">
+    <value>タスクデータの登録に成功しました。</value>
+  </data>
+  <data name="TaskIdDuplicated" xml:space="preserve">
+    <value>タスクIDが重複しています。</value>
+  </data>
+  <data name="TaskNameEmptied" xml:space="preserve">
+    <value>タスク名が設定されていません。</value>
   </data>
 </root>

@@ -39,12 +39,17 @@ namespace KT_TaskManage.Helper
 
         public static TaskData GetTaskData(MasterData masterData, TaskID taskId)
         {
-            var taskData = masterData.TaskData
-                .Where(v => v.Id == taskId)
-                .FirstOrDefault();
-            if (taskData == null) return TaskData.InvalidData();
+            if (!IsExistTaskId(masterData, taskId)) return TaskData.InvalidData();
 
-            return taskData;
+            return masterData.TaskData
+                .Where(v => v.Id == taskId)
+                .Single();
+        }
+        public static bool IsActiveTask(MasterData masterData, TaskID taskId)
+        {
+            if (!IsExistTaskId(masterData, taskId)) return false;
+
+            return GetTaskData(masterData, taskId).Type == TaskType.Active;
         }
 
         public static List<TaskData> GetActiveTaskList(MasterData masterData)
@@ -61,16 +66,10 @@ namespace KT_TaskManage.Helper
                 .Select(n => n).ToList();
         }
 
-        public static bool IsDuplicateId(MasterData masterData, TaskID id, out string message)
-        {
-            if (masterData.TaskData.Any(n => n.Id == id))
-            {
-                message = "重複IDがあります。";
-                return false;
-            }
+        public static bool IsExistTaskId(MasterData masterData, TaskID id)
+            => masterData.TaskData.Any(n => n.Id == id);
 
-            message = string.Empty;
-            return true;
-        }
+        public static bool IsDuplicateId(MasterData masterData, TaskID id)
+            => IsExistTaskId(masterData, id);
     }
 }
