@@ -1,14 +1,13 @@
 ﻿using KT_TaskManage.Data;
-using KT_TaskManage.Helper;
 using KT_TaskManage.Util;
 
 namespace KT_TaskManage.Controller
 {
     internal class MainController : MainForm.IController, IDisposable
     {
-        MasterData _masterData;
+        MasterModel _masterData;
 
-        public MainController(MasterData masterData)
+        public MainController(MasterModel masterData)
         {
             this._masterData = masterData;
         }
@@ -17,26 +16,26 @@ namespace KT_TaskManage.Controller
         {
         }
 
-        public void AddTask(TaskData taskData)
-            => TaskDataHelper.AddTask(_masterData, taskData);
+        public void AddTask(TaskModel taskData)
+            => TaskModelHelper.AddTask(_masterData, taskData);
 
         public void DeleteTask(TaskID taskId)
-            => TaskDataHelper.DeleteTask(_masterData, taskId);
+            => TaskModelHelper.DeleteTask(_masterData, taskId);
 
-        public void EditTask(TaskData taskData)
-            => TaskDataHelper.EditTask(_masterData, taskData);
+        public void EditTask(TaskModel taskData)
+            => TaskModelHelper.EditTask(_masterData, taskData);
 
-        public TaskData GetTaskData(TaskID taskId)
-            => TaskDataHelper.GetTaskData(_masterData, taskId);
+        public TaskModel GetTaskData(TaskID taskId)
+            => TaskModelHelper.GetTaskData(_masterData, taskId);
 
         public bool IsValidTaskId(TaskID taskId)
             => taskId != TaskID.Invalid;
 
-        List<TaskData> MainForm.IController.GetActiveTaskList()
-            => TaskDataHelper.GetActiveTaskList(_masterData);
+        List<TaskModel> MainForm.IController.GetActiveTaskList()
+            => TaskModelHelper.GetActiveTaskList(_masterData);
 
-        List<TaskData> MainForm.IController.GetDeactiveTaskList()
-            => TaskDataHelper.GetDeactiveTaskList(_masterData);
+        List<TaskModel> MainForm.IController.GetDeactiveTaskList()
+            => TaskModelHelper.GetDeactiveTaskList(_masterData);
 
         public void SaveData()
             => FileManager.XmlSerialize(@".\test.xml", _masterData);
@@ -44,10 +43,10 @@ namespace KT_TaskManage.Controller
         public void LoadData()
             => FileManager.XmlDeSerialize(@".\test.xml", out _masterData);
 
-        public bool OpenNewRegistTaskForm(Func<MasterData, bool> func)
+        public bool OpenNewRegistTaskForm(Func<MasterModel, bool> func)
             => func(_masterData);
 
-        public bool OpenEditRegistTaskForm(Func<MasterData, TaskID, bool> func, TaskID taskId)
+        public bool OpenEditRegistTaskForm(Func<MasterModel, TaskID, bool> func, TaskID taskId)
             => func(_masterData, taskId);
     }
 }

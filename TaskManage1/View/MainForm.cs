@@ -9,17 +9,17 @@ namespace KT_TaskManage
 
         public interface IController
         {
-            internal List<TaskData> GetActiveTaskList();
-            internal List<TaskData> GetDeactiveTaskList();
+            internal List<TaskModel> GetActiveTaskList();
+            internal List<TaskModel> GetDeactiveTaskList();
             bool IsValidTaskId(TaskID taskId);
-            void AddTask(TaskData taskData);
-            void EditTask(TaskData taskData);
+            void AddTask(TaskModel taskData);
+            void EditTask(TaskModel taskData);
             void DeleteTask(TaskID taskId);
-            TaskData GetTaskData(TaskID taskId);
+            TaskModel GetTaskData(TaskID taskId);
             void SaveData();
             void LoadData();
-            bool OpenNewRegistTaskForm(Func<MasterData, bool> func);
-            bool OpenEditRegistTaskForm(Func<MasterData, TaskID, bool> func, TaskID taskId);
+            bool OpenNewRegistTaskForm(Func<MasterModel, bool> func);
+            bool OpenEditRegistTaskForm(Func<MasterModel, TaskID, bool> func, TaskID taskId);
         }
 
         public MainForm(IController controller)
@@ -69,7 +69,7 @@ namespace KT_TaskManage
 
         private void DeleteTaskButton_Click(object sender, EventArgs e)
         {
-            var taskData = GetActiveListBox().SelectedItem as TaskData;
+            var taskData = GetActiveListBox().SelectedItem as TaskModel;
             if (taskData == null ||
                 !_controller.IsValidTaskId(taskData.Id))
             {
@@ -84,7 +84,7 @@ namespace KT_TaskManage
 
         private void EditTaskButton_Click(object sender, EventArgs e)
         {
-            var taskData = GetActiveListBox().SelectedItem as TaskData;
+            var taskData = GetActiveListBox().SelectedItem as TaskModel;
             if (taskData == null ||
                 !_controller.IsValidTaskId(taskData.Id))
             {
@@ -118,7 +118,7 @@ namespace KT_TaskManage
 
         private void TaskItemListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var taskData = GetActiveListBox().SelectedItem as TaskData;
+            var taskData = GetActiveListBox().SelectedItem as TaskModel;
             if (taskData == null ||
                 !_controller.IsValidTaskId(taskData.Id)) return;
 
@@ -127,7 +127,7 @@ namespace KT_TaskManage
 
         private void TaskItemListBox_Format(object sender, ListControlConvertEventArgs e)
         {
-            var taskData = e.ListItem as TaskData;
+            var taskData = e.ListItem as TaskModel;
             if (taskData == null) return;
 
             e.Value = string.Format($"{taskData.Id}, {taskData.Name}");
@@ -135,7 +135,7 @@ namespace KT_TaskManage
 
         private void EndTaskButton_Click(object sender, EventArgs e)
         {
-            var taskData = GetActiveListBox().SelectedItem as TaskData;
+            var taskData = GetActiveListBox().SelectedItem as TaskModel;
             if (taskData == null ||
                 !_controller.IsValidTaskId(taskData.Id))
             {

@@ -1,20 +1,20 @@
 ﻿using KT_TaskManage.Data;
-using KT_TaskManage.Helper;
+using KT_TaskManage.Util;
 
 namespace KT_TaskManage.Controller
 {
     internal class RegistTaskController : RegistTaskForm.IController, IDisposable
     {
-        readonly MasterData _masterData;
+        readonly MasterModel _masterData;
         bool _isEdit = false;
 
-        public RegistTaskController(MasterData masterData)
+        public RegistTaskController(MasterModel masterData)
         {
             _masterData = masterData;
         }
 
         public bool IsActiveTask(TaskID taskId)
-            => TaskDataHelper.IsActiveTask(_masterData, taskId);
+            => TaskModelHelper.IsActiveTask(_masterData, taskId);
 
         public int MaxTaskId() => 100;
         public int MinTaskId() => 1;
@@ -26,15 +26,15 @@ namespace KT_TaskManage.Controller
         public bool CanChangeTaskId(TaskID taskId) => !_isEdit;
 
         public string GetTaskName(TaskID taskId)
-            => TaskDataHelper.GetTaskData(_masterData, taskId).Name;
+            => TaskModelHelper.GetTaskData(_masterData, taskId).Name;
 
         public string GetDescription(TaskID taskId)
-            => TaskDataHelper.GetTaskData(_masterData, taskId).Description;
+            => TaskModelHelper.GetTaskData(_masterData, taskId).Description;
 
         public void SetEdit(bool enable)
             => _isEdit = enable;
 
-        public bool RegistTaskData(TaskData taskData, out string resultMessage)
+        public bool RegistTaskData(TaskModel taskData, out string resultMessage)
         {
             if (string.IsNullOrEmpty(taskData.Name))
             {
@@ -42,14 +42,14 @@ namespace KT_TaskManage.Controller
                 return false;
             }
 
-            if (!_isEdit && TaskDataHelper.IsDuplicateId(_masterData, taskData.Id))
+            if (!_isEdit && TaskModelHelper.IsDuplicateId(_masterData, taskData.Id))
             {
                 resultMessage = Resource.TaskIdDuplicated;
                 return false;
             }
 
-            if (_isEdit) TaskDataHelper.EditTask(_masterData, taskData);
-            else TaskDataHelper.AddTask(_masterData, taskData);
+            if (_isEdit) TaskModelHelper.EditTask(_masterData, taskData);
+            else TaskModelHelper.AddTask(_masterData, taskData);
 
             resultMessage = Resource.RegistTaskDataSuccessed;
             return true;

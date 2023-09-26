@@ -15,7 +15,7 @@ namespace KT_TaskManage
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            MasterData _masterData = new();
+            MasterModel _masterData = new();
             var controller = new MainController(_masterData);
             var mainForm = new MainForm(controller);
 

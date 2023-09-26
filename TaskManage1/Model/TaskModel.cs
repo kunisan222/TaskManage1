@@ -2,7 +2,7 @@
 
 namespace KT_TaskManage.Data
 {
-    public class TaskData
+    public record TaskModel
     {
         public enum TaskType
         {
@@ -16,12 +16,12 @@ namespace KT_TaskManage.Data
         public string Description { get; set; } = string.Empty;
         [ReadOnly(true)]
         public TaskType Type { get; set; } = TaskType.None;
-        public static TaskData InvalidData()
+        public static TaskModel InvalidData()
         {
-            return new TaskData(TaskID.Invalid, string.Empty, string.Empty, TaskType.None);
+            return new TaskModel(TaskID.Invalid, string.Empty, string.Empty, TaskType.None);
         }
-        public TaskData() { }
-        public TaskData(TaskID id, string name, string description, TaskType type)
+        public TaskModel() { }
+        public TaskModel(TaskID id, string name, string description, TaskType type)
         {
             Id = id;
             Name = name;

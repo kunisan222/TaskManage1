@@ -6,9 +6,9 @@ namespace KT_TaskManage.Util
 {
     public static class FileManager
     {
-        public static bool XmlSerialize(string fileName, MasterData writeData)
+        public static bool XmlSerialize(string fileName, MasterModel writeData)
         {
-            var xmlSerializer = new XmlSerializer(typeof(MasterData));
+            var xmlSerializer = new XmlSerializer(typeof(MasterModel));
             using (var streamWriter = new StreamWriter(fileName, false, Encoding.UTF8))
             {
                 xmlSerializer.Serialize(streamWriter, writeData);
@@ -18,9 +18,9 @@ namespace KT_TaskManage.Util
             return true;
         }
 
-        public static bool XmlDeSerialize(string fileName, out MasterData readData)
+        public static bool XmlDeSerialize(string fileName, out MasterModel readData)
         {
-            var xmlSerializer = new XmlSerializer(typeof(MasterData));
+            var xmlSerializer = new XmlSerializer(typeof(MasterModel));
             var xmlSettings = new System.Xml.XmlReaderSettings()
             {
                 CheckCharacters = false,
@@ -29,7 +29,7 @@ namespace KT_TaskManage.Util
             using (var streamReader = new StreamReader(fileName, Encoding.UTF8))
             using (var xmlReader = System.Xml.XmlReader.Create(streamReader, xmlSettings))
             {
-                readData = (MasterData)(xmlSerializer.Deserialize(xmlReader) ?? new MasterData());
+                readData = (MasterModel)(xmlSerializer.Deserialize(xmlReader) ?? new MasterModel());
             }
 
             return true;

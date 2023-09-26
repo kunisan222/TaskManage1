@@ -1,5 +1,5 @@
 ﻿using KT_TaskManage.Data;
-using static KT_TaskManage.Data.TaskData;
+using static KT_TaskManage.Data.TaskModel;
 
 namespace KT_TaskManage
 {
@@ -16,7 +16,7 @@ namespace KT_TaskManage
             bool CanChangeTaskId(TaskID taskId);
             string GetTaskName(TaskID taskId);
             string GetDescription(TaskID taskId);
-            bool RegistTaskData(TaskData taskData, out string resultMessage);
+            bool RegistTaskData(TaskModel taskData, out string resultMessage);
         }
 
         public RegistTaskForm(IController controller)
@@ -48,7 +48,7 @@ namespace KT_TaskManage
 
         private void RegistButton_Click(object sender, EventArgs e)
         {
-            var taskData = new TaskData(
+            var taskData = new TaskModel(
                 new TaskID(decimal.ToInt32(TaskIdNumericUpDown.Value)),
                 TaskNameTextBox.Text,
                 DescriptionTextBox.Text,

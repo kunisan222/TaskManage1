@@ -1,16 +1,16 @@
 ﻿using KT_TaskManage.Data;
-using static KT_TaskManage.Data.TaskData;
+using static KT_TaskManage.Data.TaskModel;
 
-namespace KT_TaskManage.Helper
+namespace KT_TaskManage.Util
 {
-    internal static class TaskDataHelper
+    internal static class TaskModelHelper
     {
-        public static void AddTask(MasterData masterData, TaskData taskData)
+        public static void AddTask(MasterModel masterData, TaskModel taskData)
         {
             masterData.TaskData.Add(taskData);
         }
 
-        public static void EditTask(MasterData masterData, TaskData taskData)
+        public static void EditTask(MasterModel masterData, TaskModel taskData)
         {
             masterData.TaskData
                 .Where(v => v.Id == taskData.Id)
@@ -21,12 +21,12 @@ namespace KT_TaskManage.Helper
                 });
         }
 
-        public static void DeleteTask(MasterData masterData, TaskID taskId)
+        public static void DeleteTask(MasterModel masterData, TaskID taskId)
         {
             masterData.TaskData.RemoveAll(v => v.Id == taskId);
         }
 
-        public static void EndTask(MasterData masterData, TaskID taskId)
+        public static void EndTask(MasterModel masterData, TaskID taskId)
         {
             masterData.TaskData
                 .Where(v => v.Id == taskId)
@@ -37,39 +37,39 @@ namespace KT_TaskManage.Helper
                 });
         }
 
-        public static TaskData GetTaskData(MasterData masterData, TaskID taskId)
+        public static TaskModel GetTaskData(MasterModel masterData, TaskID taskId)
         {
-            if (!IsExistTaskId(masterData, taskId)) return TaskData.InvalidData();
+            if (!IsExistTaskId(masterData, taskId)) return InvalidData();
 
             return masterData.TaskData
                 .Where(v => v.Id == taskId)
                 .Single();
         }
-        public static bool IsActiveTask(MasterData masterData, TaskID taskId)
+        public static bool IsActiveTask(MasterModel masterData, TaskID taskId)
         {
             if (!IsExistTaskId(masterData, taskId)) return false;
 
             return GetTaskData(masterData, taskId).Type == TaskType.Active;
         }
 
-        public static List<TaskData> GetActiveTaskList(MasterData masterData)
+        public static List<TaskModel> GetActiveTaskList(MasterModel masterData)
         {
             return masterData.TaskData
                 .Where(v => v.Type == TaskType.Active)
                 .Select(n => n).ToList();
         }
 
-        public static List<TaskData> GetDeactiveTaskList(MasterData masterData)
+        public static List<TaskModel> GetDeactiveTaskList(MasterModel masterData)
         {
             return masterData.TaskData
                 .Where(v => v.Type == TaskType.Deactive)
                 .Select(n => n).ToList();
         }
 
-        public static bool IsExistTaskId(MasterData masterData, TaskID id)
+        public static bool IsExistTaskId(MasterModel masterData, TaskID id)
             => masterData.TaskData.Any(n => n.Id == id);
 
-        public static bool IsDuplicateId(MasterData masterData, TaskID id)
+        public static bool IsDuplicateId(MasterModel masterData, TaskID id)
             => IsExistTaskId(masterData, id);
     }
 }
