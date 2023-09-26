@@ -43,6 +43,11 @@
             SaveDataButton = new Button();
             LoadDataButton = new Button();
             EndTaskButton = new Button();
+            MainMenuStrip = new MenuStrip();
+            FileMenuItem = new ToolStripMenuItem();
+            保存ToolStripMenuItem = new ToolStripMenuItem();
+            読み込みToolStripMenuItem = new ToolStripMenuItem();
+            終了ToolStripMenuItem = new ToolStripMenuItem();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -51,6 +56,7 @@
             TaskListTabControl.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
+            MainMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // RegistTaskButton
@@ -219,6 +225,40 @@
             EndTaskButton.UseVisualStyleBackColor = true;
             EndTaskButton.Click += EndTaskButton_Click;
             // 
+            // MainMenuStrip
+            // 
+            MainMenuStrip.Items.AddRange(new ToolStripItem[] { FileMenuItem });
+            MainMenuStrip.Location = new Point(0, 0);
+            MainMenuStrip.Name = "MainMenuStrip";
+            MainMenuStrip.Size = new Size(811, 24);
+            MainMenuStrip.TabIndex = 9;
+            MainMenuStrip.Text = "menuStrip1";
+            // 
+            // FileMenuItem
+            // 
+            FileMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 保存ToolStripMenuItem, 読み込みToolStripMenuItem, 終了ToolStripMenuItem });
+            FileMenuItem.Name = "FileMenuItem";
+            FileMenuItem.Size = new Size(67, 20);
+            FileMenuItem.Text = "ファイル(&F)";
+            // 
+            // 保存ToolStripMenuItem
+            // 
+            保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
+            保存ToolStripMenuItem.Size = new Size(180, 22);
+            保存ToolStripMenuItem.Text = "保存";
+            // 
+            // 読み込みToolStripMenuItem
+            // 
+            読み込みToolStripMenuItem.Name = "読み込みToolStripMenuItem";
+            読み込みToolStripMenuItem.Size = new Size(180, 22);
+            読み込みToolStripMenuItem.Text = "読み込み";
+            // 
+            // 終了ToolStripMenuItem
+            // 
+            終了ToolStripMenuItem.Name = "終了ToolStripMenuItem";
+            終了ToolStripMenuItem.Size = new Size(180, 22);
+            終了ToolStripMenuItem.Text = "終了";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -232,6 +272,8 @@
             Controls.Add(groupBox1);
             Controls.Add(CloseButton);
             Controls.Add(RegistTaskButton);
+            Controls.Add(MainMenuStrip);
+            MainMenuStrip = MainMenuStrip;
             Name = "MainForm";
             Text = "メイン画面";
             groupBox1.ResumeLayout(false);
@@ -242,7 +284,10 @@
             TaskListTabControl.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
+            MainMenuStrip.ResumeLayout(false);
+            MainMenuStrip.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -262,5 +307,10 @@
         private TabPage tabPage1;
         private TabPage tabPage2;
         private ListBox DeactiveTaskItemListBox;
+        private MenuStrip MainMenuStrip;
+        private ToolStripMenuItem FileMenuItem;
+        private ToolStripMenuItem 保存ToolStripMenuItem;
+        private ToolStripMenuItem 読み込みToolStripMenuItem;
+        private ToolStripMenuItem 終了ToolStripMenuItem;
     }
 }
