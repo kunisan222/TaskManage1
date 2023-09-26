@@ -146,5 +146,10 @@ namespace KT_TaskManage
 
             UpdateTaskList();
         }
+
+        private void SaveMenu_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("test", "test", MessageBoxButtons.OK);
+        }
     }
 }

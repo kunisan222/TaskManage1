@@ -19,7 +19,7 @@ namespace KT_TaskManage
             var controller = new MainController(_masterData);
             var mainForm = new MainForm(controller);
 
-            Application.Run();
+            Application.Run(mainForm);
         }
     }
 }

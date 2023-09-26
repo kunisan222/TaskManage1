@@ -246,6 +246,7 @@
             保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
             保存ToolStripMenuItem.Size = new Size(180, 22);
             保存ToolStripMenuItem.Text = "保存";
+            保存ToolStripMenuItem.Click += SaveMenu_Click;
             // 
             // 読み込みToolStripMenuItem
             // 
@@ -273,7 +274,6 @@
             Controls.Add(CloseButton);
             Controls.Add(RegistTaskButton);
             Controls.Add(MainMenuStrip);
-            MainMenuStrip = MainMenuStrip;
             Name = "MainForm";
             Text = "メイン画面";
             groupBox1.ResumeLayout(false);
