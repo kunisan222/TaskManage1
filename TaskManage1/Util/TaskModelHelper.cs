@@ -26,6 +26,17 @@ namespace KT_TaskManage.Util
             masterData.TaskData.RemoveAll(v => v.Id == taskId);
         }
 
+        public static void ChangeActiveTask(MasterModel masterData, TaskID taskId)
+        {
+            masterData.TaskData
+                .Where(v => v.Id == taskId)
+                .ToList()
+                .ForEach(v =>
+                {
+                    v.Type = TaskType.Deactive;
+                });
+        }
+
         public static void EndTask(MasterModel masterData, TaskID taskId)
         {
             masterData.TaskData

@@ -15,6 +15,7 @@ namespace KT_TaskManage
             void AddTask(TaskModel taskData);
             void EditTask(TaskModel taskData);
             void DeleteTask(TaskID taskId);
+            void ChangeActiveTask(TaskID taskId);
             TaskModel GetTaskData(TaskID taskId);
             void SaveData();
             void LoadData();
@@ -139,10 +140,11 @@ namespace KT_TaskManage
             if (taskData == null ||
                 !_controller.IsValidTaskId(taskData.Id))
             {
+                MessageBox.Show(Resource.NoSelectedDeleteTaskId, Resource.Error, MessageBoxButtons.OK);
                 return;
             }
 
-            _controller.EditTask(taskData);
+            _controller.ChangeActiveTask(taskData.Id);
 
             UpdateTaskList();
         }

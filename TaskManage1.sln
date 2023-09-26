@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KT_TaskManage", "TaskManage1\KT_TaskManage.csproj", "{B66A8B11-ACA6-44FB-8276-6853A8C95C0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{9BD88A0E-AD51-4AB6-80D4-6E6D7469D02F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B66A8B11-ACA6-44FB-8276-6853A8C95C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B66A8B11-ACA6-44FB-8276-6853A8C95C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B66A8B11-ACA6-44FB-8276-6853A8C95C0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BD88A0E-AD51-4AB6-80D4-6E6D7469D02F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BD88A0E-AD51-4AB6-80D4-6E6D7469D02F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BD88A0E-AD51-4AB6-80D4-6E6D7469D02F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BD88A0E-AD51-4AB6-80D4-6E6D7469D02F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

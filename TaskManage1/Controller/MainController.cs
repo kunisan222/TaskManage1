@@ -3,7 +3,7 @@ using KT_TaskManage.Util;
 
 namespace KT_TaskManage.Controller
 {
-    internal class MainController : MainForm.IController, IDisposable
+    public class MainController : MainForm.IController, IDisposable
     {
         MasterModel _masterData;
 
@@ -21,6 +21,9 @@ namespace KT_TaskManage.Controller
 
         public void DeleteTask(TaskID taskId)
             => TaskModelHelper.DeleteTask(_masterData, taskId);
+
+        public void ChangeActiveTask(TaskID taskId)
+            => TaskModelHelper.ChangeActiveTask(_masterData, taskId);
 
         public void EditTask(TaskModel taskData)
             => TaskModelHelper.EditTask(_masterData, taskData);
