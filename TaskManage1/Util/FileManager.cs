@@ -1,4 +1,5 @@
 ﻿using KT_TaskManage.Data;
+using System.Diagnostics;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -26,10 +27,18 @@ namespace KT_TaskManage.Util
                 CheckCharacters = false,
             };
 
-            using (var streamReader = new StreamReader(fileName, Encoding.UTF8))
-            using (var xmlReader = System.Xml.XmlReader.Create(streamReader, xmlSettings))
+            try
             {
-                readData = (MasterModel)(xmlSerializer.Deserialize(xmlReader) ?? new MasterModel());
+                using (var streamReader = new StreamReader(fileName, Encoding.UTF8))
+                using (var xmlReader = System.Xml.XmlReader.Create(streamReader, xmlSettings))
+                {
+                    readData = (MasterModel)(xmlSerializer.Deserialize(xmlReader) ?? new MasterModel());
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                Trace.TraceError(ex.Message);
+                readData = new MasterModel();
             }
 
             return true;
