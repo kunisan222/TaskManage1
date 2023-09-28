@@ -48,6 +48,7 @@
             保存ToolStripMenuItem = new ToolStripMenuItem();
             読み込みToolStripMenuItem = new ToolStripMenuItem();
             終了ToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -236,7 +237,7 @@
             // 
             // FileMenuItem
             // 
-            FileMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 保存ToolStripMenuItem, 読み込みToolStripMenuItem, 終了ToolStripMenuItem });
+            FileMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 保存ToolStripMenuItem, 読み込みToolStripMenuItem, toolStripSeparator1, 終了ToolStripMenuItem });
             FileMenuItem.Name = "FileMenuItem";
             FileMenuItem.Size = new Size(67, 20);
             FileMenuItem.Text = "ファイル(&F)";
@@ -259,6 +260,11 @@
             終了ToolStripMenuItem.Name = "終了ToolStripMenuItem";
             終了ToolStripMenuItem.Size = new Size(180, 22);
             終了ToolStripMenuItem.Text = "終了";
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // MainForm
             // 
@@ -312,5 +318,6 @@
         private ToolStripMenuItem 保存ToolStripMenuItem;
         private ToolStripMenuItem 読み込みToolStripMenuItem;
         private ToolStripMenuItem 終了ToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
     }
 }
